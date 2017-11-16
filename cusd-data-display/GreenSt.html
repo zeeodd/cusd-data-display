@@ -64,8 +64,8 @@
           console.log(msg);
           MapRoute(msg);
           setTimeout(function(){
-            location.reload();
-          }, 10000); 
+            DeleteMarkers();
+          }, 5000); 
           $("#orders").text(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {

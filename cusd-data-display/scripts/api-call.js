@@ -14,6 +14,7 @@ $(document).ready(function () {
       success: function(msg) {
         data = msg;
         MapRoute(msg);
+        console.log(markers);
         setTimeout(function(){
             DeleteMarkers();
         }, 2000); 
