@@ -52,7 +52,7 @@
     $(document).ready(function () {
       var token = 'Bearer e5159b89-86c1-3cca-8412-59de037c674b';
       $.ajax({
-        url: 'https://gateway.api.cloud.wso2.com:443/t/mystop/tcat/v1/rest/StopDepartures/Get/165',
+        url: 'https://gateway.api.cloud.wso2.com:443/t/mystop/tcat/v1/rest/StopDepartures/Get/1525',
         type: 'GET',
         dataType: 'json',
         beforeSend: function(xhr) {
@@ -78,10 +78,11 @@
   <script language="javascript" type="text/javascript">
 
 
+    //using Rockefeller stop - ID 1525
     function TimeTable(msg) {
-      $date = (msg[0].RouteDirections[0].Departures[0].ETA);
-      preg_match('/(\d{10})(\d{3})([\+\-]\d{4})/', $date, $matches);
-      $dt = DateTime::createFromFormat("U.u.O",vsprintf('%2$s.%3$s.%4$s', $matches));
-      echo $dt->format('r');
+      var testdate = (msg[0].RouteDirections[0].Departures[0].ETA);
+
+      console.log(testdate);
     }
+
 </script>
