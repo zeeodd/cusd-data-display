@@ -1,20 +1,110 @@
 function TimeTable(msg) {
-  var date = msg[0].RouteDirections[0].Departures.length;
-  if (date != 0) {
-    var eta = msg[0].RouteDirections[0].Departures[0].ETA;
-    var a = new Date(eta * 1000);
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-    console.log(time);
-    document.getElementById("timetable").innerHTML = time;
-  } else {
-    console.log("There are no scheduled departures.");
-    document.getElementById("timetable").innerHTML = "There are no scheduled departures.";
+
+  //RouteDirections is an array of Route objects - all buses that stop at the defined StopID, grouped by route
+  //Departures is an array of departure + arrival times for each bus in the specific route, within the Route object
+  //RouteID is the route number, within the Route object
+
+  //for each route
+  for (i=0; i<msg[0].RouteDirections.length; i++) {
+
+    var route = msg[0].RouteDirections[i]
+    var numOfDeparts = route.Departures.length;
+    var routeID = route.RouteId;
+
+    //if there are buses running and the routeID = 30:
+    if (numOfDeparts != 0 && routeID == 30) {
+
+      //for each entry in Departures (each bus)
+      for (bus=0; bus<route.Departures.length; bus++) {
+
+        //get the ETA of the bus
+        var eta = route.Departures[bus].ETA;
+        console.log(eta);
+        var substring = eta.replace("/Date(", "");
+        substring = substring.replace("-0500)/", "");
+        console.log(substring);
+
+        var t = new Date(substring * 1000);
+        var formatted = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2);
+        console.log(formatted);
+
+        //add the ETA to relevant ID in HTML
+        document.getElementById("route30").innerHTML += formatted;
+      }
+
+    } else {
+
+      console.log("There are no scheduled departures.");
+      document.getElementById("route30").innerHTML += 'There are no scheduled departures. ';
+    } 
+
+    if (numOfDeparts != 0 && routeID == 32) {
+
+      for (bus=0; bus<route.Departures.length; bus++) {
+
+        var eta = route.Departures[bus].ETA;
+        console.log(eta);
+        var substring = eta.replace("/Date(", "");
+        substring = substring.replace("-0500)/", "");
+        console.log(substring);
+
+        var t = new Date(substring * 1000);
+        var formatted = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2);
+        console.log(formatted);
+        document.getElementById("route32").innerHTML += formatted;
+      }
+
+    } else {
+
+      console.log("There are no scheduled departures.");
+      document.getElementById("route32").innerHTML += 'There are no scheduled departures. ';
+
+    }
+
+    if (numOfDeparts != 0 && routeID == 82) {
+
+      for (bus=0; bus<route.Departures.length; bus++) {
+
+        var eta = route.Departures[bus].ETA;
+        console.log(eta);
+        var substring = eta.replace("/Date(", "");
+        substring = substring.replace("-0500)/", "");
+        console.log(substring);
+
+        var t = new Date(substring * 1000);
+        var formatted = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2);
+        console.log(formatted);
+        document.getElementById("route82").innerHTML += formatted;
+      }
+
+    } else {
+
+      console.log("There are no scheduled departures.");
+      document.getElementById("route82").innerHTML += 'There are no scheduled departures. ';
+
+    }
+    
+    if (numOfDeparts != 0 && routeID == 90) {
+
+      for (bus=0; bus<route.Departures.length; bus++) {
+
+        var eta = route.Departures[bus].ETA;
+        console.log(eta);
+        var substring = eta.replace("/Date(", "");
+        substring = substring.replace("-0500)/", "");
+        console.log(substring);
+
+        var t = new Date(substring * 1000);
+        var formatted = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2);
+        console.log(formatted);
+        document.getElementById("route90").innerHTML += formatted + ' ';
+      }
+
+    } else {
+
+      console.log("There are no scheduled departures.");
+      document.getElementById("route90").innerHTML += 'There are no scheduled departures. ';
+
+    }
   }
 }
