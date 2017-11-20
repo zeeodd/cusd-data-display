@@ -5,6 +5,9 @@
   <title> TCAT </title>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="styles/all.css" media="all"/>
+  <script src="scripts/jquery-3.2.1.min.js" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZtZePBTLXPSvNiZL3wPoNmbAugSiJdWc&callback=initMap" type="text/javascript"></script>
+  <script src="scripts/maps.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -15,119 +18,21 @@
 
   <nav>
     <ul>
-      <li><button><a href="Route30.html">Route 30</a></button></li>
-      <li><button><a href="Route72.html">Route 72</a></button></li>
-      <li><button>Route 89</button></li>
-      <li><button><a href ="GreenSt.html">Green Street</a></button></li>
-      <li><button><a href="Buses.html">Buses</a></button></li>
+      <li><a href="GreenSt.html">Green Street</a></li>
+      <li><a href="Buses.html">Buses</a></li>
+      <li><a href="Timetable.html">Timetable</a></li>
     </ul>
   </nav>
 
-  <div id="api_calls">
-    <p>This is an API call.</p>
-    <p>This is another API call.</p>
-  </div>
-
-  <div id="map_it">
-
-    <ul>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type='text/javascript'>
-    // $(document).ready(function(){
-    //    $.ajax({
-    //           url: 'https://gateway.api.cloud.wso2.com:443/t/mystop/tcat/v1/rest/Vehicles/GetAllVehicles',
-    //           type: 'GET',
-    //           dataType: 'application/json',
-    //           success: function() { alert('Worked'); },
-    //           error: function() { alert('Did not work'); },
-    //           beforeSend: setHeader (xhr)
-    //         });
-    //       });
-    //       function setHeader(xhr) {
-    //         xhr.setRequestHeader('Accept', 'application/json')
-    //         xhr.setRequestHeader('Authorization', 'Bearer e5159b89-86c1-3cca-8412-59de037c674b')
-    //       };
-    // };
-
-    $(document).ready(function () {
-      var token = 'Bearer e5159b89-86c1-3cca-8412-59de037c674b';
-      $.ajax({
-        url: 'https://gateway.api.cloud.wso2.com:443/t/mystop/tcat/v1/rest/Vehicles/GetAllVehicles',
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", token);
-        },
-        //data: 'json=' + escape(JSON.stringify(createRequestObject)),
-        success: function(msg) {
-          var data = JSON.stringify(msg);
-          console.log(msg);
-          MapRoute(msg);
-          $("#orders").text(data);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(errorThrown);
-        }
-      // }).done(function(data) {
-      //  alert(data);
-      });
-    });
-
+  <div id="map">
+    <!--  draw map -->
+    <script type="text/javascript">
+      DrawMap();
     </script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZtZePBTLXPSvNiZL3wPoNmbAugSiJdWc&callback=initMap"></script>
-    <script language="javascript" type="text/javascript">
-
-      var map;
-
-      function MapRoute(msg) {
-          var latlng = new google.maps.LatLng(42.46, -76.496506);
-          var myOptions =
-          {
-              zoom: 13,
-              center: latlng,
-              mapTypeId: google.maps.MapTypeId.ROADMAP,
-              disableDefaultUI: true
-          };
-          map = new google.maps.Map(document.getElementById("map"), myOptions);
-          var bounds = new google.maps.LatLngBounds();
-          var i;
-          var markers;
-          var image;
-          var greenstreet = [11, 14, 17, 20, 21, 30, 31, 32, 36, 37, 40, 43, 51, 52, 53, 65, 67, 90]
-          for (i = 0; i < msg.length; i++) {
-           // if (greenstreet.includes(msg[i].RouteID) {
-              var address = [msg[i].Latitude, msg[i].Longitude];
-              var position = new google.maps.LatLng(address[0], address[1]);
-              if (msg[i].Direction == 'O') {
-                image = './images/bus-icon-outbound.png'
-              } else {
-                image = './images/bus-icon-inbound.png'
-              }
-              marker = new google.maps.Marker({
-                position: position,
-                map: map,
-                icon: image,
-                animation: google.maps.Animation.DROP
-            });
-          }
-        //}
-      }
-
-
-    //function Button1_onclick() {
-    //    FindLocaton();
-    //}
-    </script>
-  </ul>
+    <!-- call the api -->
+    <script src="scripts/getVehicles.js" type="text/javascript"></script>
   </div>
-</head>
-<body>
-<div id ="map" style="height: 720px">
-</div>
-      <li>The next Route 30 bus will be arriving in y minutes.</li>
-    </ul>
-</div>
-<div id='orders'></div>
+
 </body>
 </html>
