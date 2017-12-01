@@ -12,6 +12,13 @@ $(document).ready(function () {
         DeleteMarkers();
         console.log(msg);
         MapRoute(msg);
+<<<<<<< HEAD:cusd-data-display/scripts/api-call.js
+        console.log(markers);
+        setTimeout(function(){
+            DeleteMarkers();
+        }, 2000); 
+=======
+>>>>>>> master:cusd-data-display/scripts/getVehicles.js
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         alert(errorThrown);
